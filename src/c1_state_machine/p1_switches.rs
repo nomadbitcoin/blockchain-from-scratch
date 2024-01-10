@@ -15,7 +15,10 @@ impl StateMachine for LightSwitch {
     type Transition = ();
 
     fn next_state(starting_state: &bool, t: &()) -> bool {
-        todo!("Exercise 1")
+        match starting_state {
+            true => false,
+            false => true
+        }
     }
 }
 
@@ -42,7 +45,25 @@ impl StateMachine for WeirdSwitchMachine {
     type Transition = Toggle;
 
     fn next_state(starting_state: &TwoSwitches, t: &Toggle) -> TwoSwitches {
-        todo!("Exercise 2")
+        let second_switch_state = if !starting_state.first_switch {
+            false
+        } else {
+            starting_state.second_switch
+        };
+    
+        match t {
+            Toggle::FirstSwitch => {
+                let first_switch_state = !starting_state.first_switch;
+                TwoSwitches {
+                    first_switch: !starting_state.first_switch,
+                    second_switch: if first_switch_state { second_switch_state } else { false },
+                }
+            },
+            Toggle::SecondSwitch => TwoSwitches {
+                first_switch: starting_state.first_switch,
+                second_switch: !starting_state.second_switch,
+            },
+        }
     }
 }
 
