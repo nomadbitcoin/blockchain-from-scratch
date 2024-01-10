@@ -40,7 +40,89 @@ impl StateMachine for ClothesMachine {
     type Transition = ClothesAction;
 
     fn next_state(starting_state: &ClothesState, t: &ClothesAction) -> ClothesState {
-        todo!("Exercise 3")
+        match t {
+            ClothesAction::Wear => match starting_state {
+                ClothesState::Clean(life_points) => {
+                    let new_life_points = life_points - 1;
+                    if new_life_points <= 0 {
+                        ClothesState::Tattered
+                    } else {
+                        ClothesState::Dirty(new_life_points)
+                    }
+                }
+                ClothesState::Tattered => ClothesState::Tattered,
+                ClothesState::Dirty(life_points) => {
+                    let new_life_points = life_points - 1;
+                    if new_life_points <= 0 {
+                        ClothesState::Tattered
+                    } else {
+                        ClothesState::Dirty(new_life_points)
+                    }
+                }
+                ClothesState::Wet(life_points) => {
+                    let new_life_points = life_points - 1;
+                    if new_life_points <= 0 {
+                        ClothesState::Tattered
+                    } else {
+                        ClothesState::Dirty(new_life_points)
+                    }
+                }
+            },
+            ClothesAction::Wash => match starting_state {
+                ClothesState::Clean(life_points) => {
+                    let new_life_points = life_points - 1;
+                    if new_life_points <= 0 {
+                        ClothesState::Tattered
+                    } else {
+                        ClothesState::Wet(new_life_points)
+                    }
+                }
+                ClothesState::Tattered => ClothesState::Tattered,
+                ClothesState::Dirty(life_points) => {
+                    let new_life_points = life_points - 1;
+                    if new_life_points <= 0 {
+                        ClothesState::Tattered
+                    } else {
+                        ClothesState::Wet(new_life_points)
+                    }
+                }
+                ClothesState::Wet(life_points) => {
+                    let new_life_points = life_points - 1;
+                    if new_life_points <= 0 {
+                        ClothesState::Tattered
+                    } else {
+                        ClothesState::Wet(new_life_points)
+                    }
+                }
+            },
+            ClothesAction::Dry => match starting_state {
+                ClothesState::Clean(life_points) => {
+                    let new_life_points = life_points - 1;
+                    if new_life_points <= 0 {
+                        ClothesState::Tattered
+                    } else {
+                        ClothesState::Clean(new_life_points)
+                    }
+                }
+                ClothesState::Tattered => ClothesState::Tattered,
+                ClothesState::Dirty(life_points) => {
+                    let new_life_points = life_points - 1;
+                    if new_life_points <= 0 {
+                        ClothesState::Tattered
+                    } else {
+                        ClothesState::Dirty(new_life_points)
+                    }
+                }
+                ClothesState::Wet(life_points) => {
+                    let new_life_points = life_points - 1;
+                    if new_life_points <= 0 {
+                        ClothesState::Tattered
+                    } else {
+                        ClothesState::Clean(new_life_points)
+                    }
+                }
+            },
+        }
     }
 }
 
